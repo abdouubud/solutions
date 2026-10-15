@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WeNego Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #13213C;
+    --navy-soft: rgba(19, 33, 60, 0.7);
+    --navy-faint: rgba(19, 33, 60, 0.45);
+    --navy-line: rgba(19, 33, 60, 0.12);
+    --gold: #C9A227;
+    --gold-tint: rgba(201, 162, 39, 0.14);
+    --paper: #F7F6F3;
+    --white: #FFFFFF;
+
+    /* Two sizes only: titles / text */
+    --fs-title: clamp(1.45rem, 1.05rem + 1.3vw, 2.1rem);
+    --fs-text: 1rem;
+
+    --font-title: 'Fraunces', Georgia, serif;
+    --font-text: 'Inter', system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; animation: none !important; }
+  }
+
+  body {
+    font-family: var(--font-text);
+    font-size: var(--fs-text);
+    color: var(--navy);
+    background: var(--paper);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+  h1, h2, h3 {
+    font-family: var(--font-title);
+    font-size: var(--fs-title);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  /* ---------- HEADER: logo · title · language ---------- */
+  .site-header {
+    background: var(--white);
+    border-bottom: 1px solid var(--navy-line);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  .header-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 16px;
+    min-height: 76px;
+  }
+  .brand {
+    display: inline-flex;
+    flex-direction: column;
+    text-decoration: none;
+    justify-self: start;
+    line-height: 1.2;
+  }
+  .brand img { height: 34px; width: auto; display: block; }
+  .brand .wordmark {
+    display: none;
+    font-family: var(--font-title);
+    font-weight: 600;
+    font-size: var(--fs-title);
+    letter-spacing: -0.02em;
+  }
+  .brand .wordmark b { color: var(--gold); font-weight: 600; }
+  .brand.no-logo .wordmark { display: block; }
+  .brand .tagline { color: var(--navy-faint); font-size: var(--fs-text); font-size: 0.8em; margin-top: 2px; }
+
+  .header-title {
+    font-family: var(--font-title);
+    font-weight: 600;
+    font-size: var(--fs-text);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .lang-switch {
+    justify-self: end;
+    display: inline-flex;
+    background: #ECEBE8;
+    border-radius: 999px;
+    padding: 3px;
+  }
+  .lang-switch button {
+    font: 600 var(--fs-text) var(--font-text);
+    font-size: 0.85em;
+    color: var(--navy-soft);
+    background: transparent;
+    border: 0;
+    border-radius: 999px;
+    padding: 6px 14px;
+    cursor: pointer;
+  }
+  .lang-switch button[aria-pressed="true"] { background: var(--navy); color: var(--white); }
+
+  /* ---------- INTRO ---------- */
+  .intro { padding: 56px 0 28px; }
+  .intro h1 { max-width: 760px; margin-bottom: 10px; }
+  .intro h1 em { font-style: normal; color: var(--gold); }
+  .intro p { color: var(--navy-soft); max-width: 680px; }
+
+  /* ---------- TOOLS ---------- */
+  .tools { padding: 8px 0 64px; }
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 18px;
+  }
+  .tool-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--white);
+    border: 1px solid var(--navy-line);
+    border-radius: 16px;
+    padding: 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  a.tool-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(201, 162, 39, 0.55);
+    box-shadow: 0 16px 36px rgba(19, 33, 60, 0.09);
+  }
+  .tool-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .tool-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--gold-tint);
+    color: var(--navy);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+  .tool-icon svg { width: 26px; height: 26px; }
+  .tool-card h3 { font-size: var(--fs-title); }
+  .tool-card p { color: var(--navy-soft); }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 0.8em;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .badge--live { background: rgba(19, 33, 60, 0.07); color: var(--navy); }
+  .badge--live::before { background: #2E8B57; }
+  .badge--soon { background: var(--gold-tint); color: #8A6D12; }
+  .badge--build { background: transparent; border: 1px dashed var(--navy-faint); color: var(--navy-soft); }
+
+  .tool-link {
+    margin-top: auto;
+    padding-top: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .tool-link svg { width: 16px; height: 16px; transition: transform 0.2s ease; }
+  a.tool-card:hover .tool-link svg { transform: translateX(4px); }
+  .tool-link span { border-bottom: 2px solid var(--gold); padding-bottom: 2px; }
+
+  .tool-card.is-off { background: rgba(255, 255, 255, 0.55); border-style: dashed; }
+  .tool-card.is-off .tool-icon { background: rgba(19, 33, 60, 0.06); color: var(--navy-faint); }
+  .tool-card.is-off .tool-link { color: var(--navy-faint); }
+  .tool-card.is-off .tool-link span { border-bottom-color: transparent; }
+
+  /* ---------- CTA: Call us ---------- */
+  .cta { padding: 0 0 64px; }
+  .cta-box {
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 20px;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .cta-box p { color: rgba(255, 255, 255, 0.72); margin-top: 6px; max-width: 560px; }
+  .cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 999px;
+    padding: 13px 24px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .btn svg { width: 18px; height: 18px; }
+  .btn--gold { background: var(--gold); color: var(--navy); }
+  .btn--gold:hover { transform: translateY(-2px); }
+  .btn--ghost { border: 1px solid rgba(255, 255, 255, 0.35); color: var(--white); }
+  .btn--ghost:hover { background: rgba(255, 255, 255, 0.08); }
+
+  /* ---------- SOCIAL PROOF ---------- */
+  .proof { padding: 0 0 64px; }
+  .proof h2 { text-align: center; margin-bottom: 28px; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 36px;
+  }
+  .stat {
+    background: var(--white);
+    border: 1px solid var(--navy-line);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+  }
+  .stat strong {
+    display: block;
+    font-family: var(--font-title);
+    font-size: var(--fs-title);
+    font-weight: 600;
+    color: var(--gold);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .stat span { color: var(--navy-soft); }
+
+  .clients-label { text-align: center; color: var(--navy-faint); margin-bottom: 14px; }
+  .marquee {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: scroll 45s linear infinite;
+  }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  .marquee-track span {
+    font-family: var(--font-title);
+    font-weight: 600;
+    color: var(--navy-soft);
+    padding: 0 26px;
+    white-space: nowrap;
+    border-right: 1px solid var(--navy-line);
+  }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { flex-wrap: wrap; width: auto; justify-content: center; row-gap: 10px; }
+    .marquee-track span[aria-hidden="true"] { display: none; }
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer { border-top: 1px solid var(--navy-line); padding: 20px 0; color: var(--navy-faint); }
+  .footer-row { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  footer a { text-decoration: none; color: var(--navy-soft); }
+  footer a:hover { color: var(--gold); }
+
+  @media (max-width: 720px) {
+    .wrap { padding: 0 16px; }
+    .header-row { grid-template-columns: 1fr auto; min-height: 64px; }
+    .header-title { display: none; }
+    .brand .tagline { display: none; }
+    .intro { padding: 36px 0 20px; }
+    .tool-grid { grid-template-columns: 1fr; }
+    .cta-box { padding: 28px 22px; }
+    .stats { grid-template-columns: 1fr; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- HEADER: logo · title · language -->
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="brand" href="https://wenego.fr/" target="_blank" rel="noopener">
+        <!-- Replace with the WeNego logo file -->
+        <img src="wenego-logo.png" alt="WeNego" onerror="this.parentNode.classList.add('no-logo'); this.remove();">
+        <span class="wordmark">We<b>Nego</b></span>
+        <span class="tagline">Empowering people &amp; organisations</span>
+      </a>
+      <div class="header-title">WeNego Solutions</div>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- INTRO -->
+    <section class="intro">
+      <div class="wrap">
+        <h1 data-i18n-html="intro.title">Nos outils pour négocier avec <em>une longueur d’avance</em>.</h1>
+        <p data-i18n="intro.lead">Préparez, évaluez et rééquilibrez le rapport de force — avant même de vous asseoir à la table.</p>
+      </div>
+    </section>
+
+    <!-- TOOLS -->
+    <section class="tools" id="tools">
+      <div class="wrap tool-grid">
+
+        <!-- 1 · Balance of Power -->
+        <a class="tool-card" href="https://tools.wenego.fr/" target="_blank" rel="noopener">
+          <div class="tool-head">
+            <div class="tool-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 21h10M4 8l8-2 8 2M4 8l-2.5 6a3.5 3.5 0 0 0 5 0L4 8zM20 8l-2.5 6a3.5 3.5 0 0 0 5 0L20 8z"/></svg>
+            </div>
+            <span class="badge badge--live" data-i18n="status.live">Disponible</span>
+          </div>
+          <h3 data-i18n="bop.title">Balance of Power</h3>
+          <p data-i18n="bop.desc">Cartographiez les leviers de chaque partie, comparez votre perception à une analyse calculée et repartez avec un plan d’action concret.</p>
+          <div class="tool-link"><span data-i18n="cta.open">Accéder à l’outil</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        </a>
+
+        <!-- 2 · Conflict Profiling -->
+        <a class="tool-card" href="#" data-href-base="#CONFLICT-PROFILE-URL" target="_blank" rel="noopener">
+          <div class="tool-head">
+            <div class="tool-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="16" r="3"/><path d="M10.5 10.5l3 3M14 4h6v6M10 20H4v-6"/></svg>
+            </div>
+            <span class="badge badge--live" data-i18n="status.live">Disponible</span>
+          </div>
+          <h3 data-i18n="conflict.title">Profil de gestion des conflits</h3>
+          <p data-i18n="conflict.desc">30 questions basées sur le modèle Thomas-Kilmann pour identifier votre style face au conflit et recevoir votre profil détaillé en PDF.</p>
+          <div class="tool-link"><span data-i18n="cta.open">Accéder à l’outil</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        </a>
+
+        <!-- 3 · Negotiation Plan (in progress) -->
+        <div class="tool-card is-off">
+          <div class="tool-head">
+            <div class="tool-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v2h6V3M9 10h6M9 14h6M9 18h3"/></svg>
+            </div>
+            <span class="badge badge--soon" data-i18n="status.soon">Bientôt disponible</span>
+          </div>
+          <h3 data-i18n="plan.title">Plan de négociation</h3>
+          <p data-i18n="plan.desc">Structurez votre préparation étape par étape : objectifs, marges de manœuvre, concessions et arguments clés, réunis dans un plan prêt à l’emploi.</p>
+          <div class="tool-link"><span data-i18n="cta.soon">En préparation</span></div>
+        </div>
+
+        <!-- 4 · AI Questionnaire -->
+        <a class="tool-card" href="https://ai-assessment.wenego.fr/?lang=fr" data-href-base="https://ai-assessment.wenego.fr/" target="_blank" rel="noopener">
+          <div class="tool-head">
+            <div class="tool-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 8l4 2.5v3.5L12 16l-3-2 .5-4L12 8z"/></svg>
+            </div>
+            <span class="badge badge--live" data-i18n="status.live">Disponible</span>
+          </div>
+          <h3 data-i18n="ai.title">Diagnostic de maturité IA</h3>
+          <p data-i18n="ai.desc">Mesurez la maturité de votre organisation dans l’usage de l’IA en négociation : radar à six axes et rapport PDF détaillé.</p>
+          <div class="tool-link"><span data-i18n="cta.open">Accéder à l’outil</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        </a>
+
+        <!-- 5 · Vocal Coach (under construction) -->
+        <div class="tool-card is-off">
+          <div class="tool-head">
+            <div class="tool-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8"/></svg>
+            </div>
+            <span class="badge badge--build" data-i18n="status.build">En construction</span>
+          </div>
+          <h3 data-i18n="coach.title">Coach vocal</h3>
+          <p data-i18n="coach.desc">Un coach IA conversationnel, à l’oral ou à l’écrit, qui retrace votre parcours de négociateur et vous envoie une synthèse personnalisée.</p>
+          <div class="tool-link"><span data-i18n="cta.build">Bientôt en ligne</span></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CTA: Call us -->
+    <section class="cta">
+      <div class="wrap">
+        <div class="cta-box">
+          <div>
+            <h2 data-i18n="cta.title">Besoin d’un accompagnement sur mesure ?</h2>
+            <p data-i18n="cta.lead">Parlons de vos enjeux de négociation : ateliers, coaching et conseil pour vos équipes achats et commerciales.</p>
+          </div>
+          <div class="cta-actions">
+            <a class="btn btn--gold" href="mailto:contact@wenego.fr">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+              <span data-i18n="cta.call">Contactez-nous</span>
+            </a>
+            <a class="btn btn--ghost" href="https://wenego.fr/" target="_blank" rel="noopener" data-i18n="cta.visit">Visiter wenego.fr →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOCIAL PROOF -->
+    <section class="proof">
+      <div class="wrap">
+        <h2 data-i18n="proof.title">Ils nous font confiance</h2>
+        <div class="stats">
+          <div class="stat"><strong data-i18n="proof.s1n">15 ans</strong><span data-i18n="proof.s1">d’existence</span></div>
+          <div class="stat"><strong>1500+</strong><span data-i18n="proof.s2">négociateurs formés</span></div>
+          <div class="stat"><strong>150+</strong><span data-i18n="proof.s3">ateliers animés</span></div>
+        </div>
+        <p class="clients-label" data-i18n="proof.clients">Ils ont travaillé avec WeNego</p>
+        <div class="marquee">
+          <div class="marquee-track" id="clients"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <span>© 2026 WeNego — Empowering people &amp; organisations</span>
+      <a href="https://wenego.fr/" target="_blank" rel="noopener">wenego.fr</a>
+    </div>
+  </footer>
+
+<script>
+  var CLIENTS = ["Coca-Cola", "Nestlé", "Danone", "L’Oréal", "PepsiCo", "Unilever", "Deloitte", "Canon", "Dyson", "Bose", "Sennheiser", "Lindt", "Vodafone", "Air Liquide", "Fnac Darty", "Kimberly-Clark", "eBay", "Paramount", "Auchan", "Monoprix", "Bic", "BIAT", "Jumia", "GoMyCode"];
+  (function buildClients() {
+    var track = document.getElementById('clients');
+    [false, true].forEach(function (dup) {
+      CLIENTS.forEach(function (name) {
+        var s = document.createElement('span');
+        s.textContent = name;
+        if (dup) s.setAttribute('aria-hidden', 'true');
+        track.appendChild(s);
+      });
+    });
+  })();
+
+  var I18N = {
+    fr: {
+      "meta.title": "WeNego Solutions — Nos outils de négociation",
+      "intro.title": "Nos outils pour négocier avec <em>une longueur d’avance</em>.",
+      "intro.lead": "Préparez, évaluez et rééquilibrez le rapport de force — avant même de vous asseoir à la table.",
+      "status.live": "Disponible",
+      "status.soon": "Bientôt disponible",
+      "status.build": "En construction",
+      "cta.open": "Accéder à l’outil",
+      "cta.soon": "En préparation",
+      "cta.build": "Bientôt en ligne",
+      "bop.title": "Balance of Power",
+      "bop.desc": "Cartographiez les leviers de chaque partie, comparez votre perception à une analyse calculée et repartez avec un plan d’action concret.",
+      "conflict.title": "Profil de gestion des conflits",
+      "conflict.desc": "30 questions basées sur le modèle Thomas-Kilmann pour identifier votre style face au conflit et recevoir votre profil détaillé en PDF.",
+      "plan.title": "Plan de négociation",
+      "plan.desc": "Structurez votre préparation étape par étape : objectifs, marges de manœuvre, concessions et arguments clés, réunis dans un plan prêt à l’emploi.",
+      "ai.title": "Diagnostic de maturité IA",
+      "ai.desc": "Mesurez la maturité de votre organisation dans l’usage de l’IA en négociation : radar à six axes et rapport PDF détaillé.",
+      "coach.title": "Coach vocal",
+      "coach.desc": "Un coach IA conversationnel, à l’oral ou à l’écrit, qui retrace votre parcours de négociateur et vous envoie une synthèse personnalisée.",
+      "cta.title": "Besoin d’un accompagnement sur mesure ?",
+      "cta.lead": "Parlons de vos enjeux de négociation : ateliers, coaching et conseil pour vos équipes achats et commerciales.",
+      "cta.call": "Contactez-nous",
+      "cta.visit": "Visiter wenego.fr →",
+      "proof.title": "Ils nous font confiance",
+      "proof.s1n": "15 ans",
+      "proof.s1": "d’existence",
+      "proof.s2": "négociateurs formés",
+      "proof.s3": "ateliers animés",
+      "proof.clients": "Ils ont travaillé avec WeNego"
+    },
+    en: {
+      "meta.title": "WeNego Solutions — Our negotiation tools",
+      "intro.title": "Our tools to walk into every negotiation <em>already ahead</em>.",
+      "intro.lead": "Prepare, assess and shift the balance of power — before you ever sit down at the table.",
+      "status.live": "Available",
+      "status.soon": "Coming soon",
+      "status.build": "Under construction",
+      "cta.open": "Open the tool",
+      "cta.soon": "In progress",
+      "cta.build": "Online soon",
+      "bop.title": "Balance of Power",
+      "bop.desc": "Map the leverage on both sides of the table, compare your perception against a calculated analysis, and leave with a concrete action plan.",
+      "conflict.title": "Conflict Profile",
+      "conflict.desc": "30 questions based on the Thomas-Kilmann model to identify your conflict-handling style and receive your detailed profile as a PDF.",
+      "plan.title": "Negotiation Plan",
+      "plan.desc": "Structure your preparation step by step — objectives, room to move, concessions and key arguments — in one ready-to-use plan.",
+      "ai.title": "AI Maturity Diagnostic",
+      "ai.desc": "Measure how mature your organisation is in using AI for negotiation, with a six-axis radar and a detailed PDF report.",
+      "coach.title": "Vocal Coach",
+      "coach.desc": "A conversational AI coach, by voice or text, that walks through your journey as a negotiator and sends you a personal synthesis.",
+      "cta.title": "Need tailored support?",
+      "cta.lead": "Let’s talk about your negotiation challenges: workshops, coaching and consulting for purchasing and sales teams.",
+      "cta.call": "Call us",
+      "cta.visit": "Visit wenego.fr →",
+      "proof.title": "They trust us",
+      "proof.s1n": "15 years",
+      "proof.s1": "in the market",
+      "proof.s2": "negotiators trained",
+      "proof.s3": "workshops delivered",
+      "proof.clients": "They have worked with WeNego"
+    }
+  };
+
+  function setLang(lang) {
+    if (!I18N[lang]) lang = 'fr';
+    var dict = I18N[lang];
+    document.documentElement.lang = lang;
+    document.title = dict["meta.title"];
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var v = dict[el.getAttribute('data-i18n')];
+      if (v != null) el.textContent = v;
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
+      var v = dict[el.getAttribute('data-i18n-html')];
+      if (v != null) el.innerHTML = v;
+    });
+    document.querySelectorAll('[data-href-base]').forEach(function (el) {
+      var base = el.getAttribute('data-href-base');
+      if (base.charAt(0) !== '#') el.href = base + '?lang=' + lang;
+    });
+    document.querySelectorAll('.lang-switch button').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-lang') === lang ? 'true' : 'false');
+    });
+    try { localStorage.setItem('wenego-lang', lang); } catch (e) {}
+  }
+
+  document.querySelectorAll('.lang-switch button').forEach(function (b) {
+    b.addEventListener('click', function () { setLang(b.getAttribute('data-lang')); });
+  });
+
+  (function initLang() {
+    var lang = null;
+    try { lang = new URLSearchParams(location.search).get('lang'); } catch (e) {}
+    if (!lang) { try { lang = localStorage.getItem('wenego-lang'); } catch (e) {} }
+    if (!lang) lang = (navigator.language || 'fr').slice(0, 2) === 'en' ? 'en' : 'fr';
+    setLang(lang);
+  })();
+</script>
+</body>
+</html>
